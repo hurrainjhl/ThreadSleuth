@@ -1,0 +1,22 @@
+# Ignore Build Artifacts
+build/CMakeCache.txt
+build/CMakeFiles/
+build/cmake_install.cmake
+build/Makefile
+build/parallel_engine
+build/test_pool
+
+# Ignore Object Files
+*.o
+*.so
+
+# Ignore Evidence Files (Too large for GitHub)
+*.dd
+*.img
+*.bin
+*.raw
+*.iso
+
+# Ignore Generated Reports & Logs
+forensic_report.html
+recovered_files/
