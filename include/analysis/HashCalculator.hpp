@@ -1,9 +1,13 @@
-#pragma once
+#ifndef HASHCALCULATOR_HPP
+#define HASHCALCULATOR_HPP
+
 #include <vector>
 #include <string>
-#include <cstdint>
 
 class HashCalculator {
 public:
-    static std::string sha256(const std::vector<uint8_t>& data);
+    static std::string compute_sha256(const std::vector<unsigned char>& data);
 };
+
+#endif
+

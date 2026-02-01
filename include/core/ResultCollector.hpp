@@ -1,42 +1,30 @@
-#pragma once
-#include <vector>
-#include <mutex>
-#include <string>
-#include <iostream>
+#ifndef RESULTCOLLECTOR_HPP
+#define RESULTCOLLECTOR_HPP
 
-struct AnalysisResult {
-    uint32_t chunk_id;
+#include <vector>
+#include <string>
+#include <mutex>
+
+struct Finding {
     std::string type;
-    uint64_t offset;
+    size_t offset;
+    std::string hash;
 };
 
 class ResultCollector {
-private:
-    std::vector<AnalysisResult> results;
-    std::mutex mtx;
-
 public:
-    void add(uint32_t id, const std::string& type, uint64_t offset) {
+    void add_finding(const std::string& type, size_t offset, const std::string& hash) {
         std::lock_guard<std::mutex> lock(mtx);
-        results.push_back({id, type, offset});
-        
-        // Print real-time feedback with filenames!
-        // std::cout << "[Found] " << type << " at offset " << offset << "\n";
+        findings.push_back({type, offset, hash});
     }
 
-    std::vector<AnalysisResult> get_all() {
-        std::lock_guard<std::mutex> lock(mtx);
-        return results;
+    std::vector<Finding> get_all_findings() const {
+        return findings;
     }
 
-    size_t count() {
-        std::lock_guard<std::mutex> lock(mtx);
-        return results.size();
-    }
-    
-    void print_summary() {
-        std::lock_guard<std::mutex> lock(mtx);
-        // std::cout << "\n--- Console Summary ---\n";
-    }
+private:
+    std::vector<Finding> findings;
+    std::mutex mtx;
 };
 
+#endif

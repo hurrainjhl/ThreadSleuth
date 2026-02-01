@@ -1,20 +1,32 @@
-#pragma once
+#ifndef THREADPOOL_HPP
+#define THREADPOOL_HPP
+
 #include <vector>
+#include <queue>
 #include <thread>
+#include <mutex>
+#include <condition_variable>
+#include <functional>
 #include <atomic>
-#include "TaskQueue.hpp"
-#include "ResultCollector.hpp"
 
 class ThreadPool {
+public:
+    explicit ThreadPool(size_t num_threads);
+    ~ThreadPool();
+
+    void enqueue(std::function<void()> task);
+    void wait_until_empty();
+
 private:
     std::vector<std::thread> workers;
-    TaskQueue& task_queue;
-    ResultCollector& collector;
-    std::atomic<bool> stop_flag;
-
-    void worker_thread();
-
-public:
-    ThreadPool(size_t num_threads, TaskQueue& tq, ResultCollector& rc);
-    void shutdown();
+    std::queue<std::function<void()>> tasks;
+    
+    std::mutex queue_mutex;
+    std::condition_variable condition;
+    std::condition_variable finished_condition;
+    
+    std::atomic<bool> stop;
+    std::atomic<size_t> active_tasks;
 };
+
+#endif

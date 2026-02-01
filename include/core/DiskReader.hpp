@@ -1,16 +1,19 @@
-#pragma once
+#ifndef DISKREADER_HPP
+#define DISKREADER_HPP
+
 #include <string>
+#include <fstream>
 #include <vector>
-#include <cstdint>
 
 class DiskReader {
 public:
-    explicit DiskReader(const std::string& path);
-    ~DiskReader();
-    uint64_t size() const;
-    std::vector<uint8_t> read_chunk(uint64_t offset, uint64_t size);
+    DiskReader(const std::string& path, size_t chunk_size);
+    std::vector<unsigned char> read_next_chunk();
 
 private:
     std::string file_path;
-    uint64_t total_size;
+    size_t chunk_size;
+    std::ifstream file_stream;
 };
+
+#endif

@@ -1,14 +1,17 @@
-#pragma once
+#ifndef SIGNATURESCANNER_HPP
+#define SIGNATURESCANNER_HPP
+
 #include <vector>
 #include <string>
-#include <cstdint>
 
-struct SignatureMatch {
+struct ArtifactInfo {
     std::string type;
     size_t offset;
 };
 
 class SignatureScanner {
 public:
-    static std::vector<SignatureMatch> scan(const std::vector<uint8_t>& data, size_t baseOffset);
+    static std::vector<ArtifactInfo> scan(const std::vector<unsigned char>& data, size_t base_offset);
 };
+
+#endif

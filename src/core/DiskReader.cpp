@@ -1,23 +1,22 @@
-#include "core/DiskReader.hpp"
-#include <fstream>
-#include <stdexcept>
+#include "../../include/core/DiskReader.hpp"
+#include <iostream>
 
-DiskReader::DiskReader(const std::string& path) : file_path(path) {
-    std::ifstream file(path, std::ios::binary | std::ios::ate);
-    if (!file.is_open())
-        throw std::runtime_error("Failed to open disk image: " + path);
-    total_size = file.tellg();
+DiskReader::DiskReader(const std::string& path, size_t chunk_size) 
+    : file_path(path), chunk_size(chunk_size) {
+    file_stream.open(path, std::ios::binary);
 }
 
-DiskReader::~DiskReader() {}
+std::vector<unsigned char> DiskReader::read_next_chunk() {
+    if (!file_stream.is_open() || file_stream.eof()) {
+        return {};
+    }
 
-uint64_t DiskReader::size() const { return total_size; }
+    std::vector<unsigned char> buffer(chunk_size);
+    file_stream.read(reinterpret_cast<char*>(buffer.data()), chunk_size);
+    
+    size_t bytes_read = file_stream.gcount();
+    if (bytes_read == 0) return {};
 
-std::vector<uint8_t> DiskReader::read_chunk(uint64_t offset, uint64_t size) {
-    std::ifstream file(file_path, std::ios::binary);
-    file.seekg(offset, std::ios::beg);
-    std::vector<uint8_t> buffer(size);
-    file.read(reinterpret_cast<char*>(buffer.data()), size);
-    buffer.resize(file.gcount());
+    buffer.resize(bytes_read);
     return buffer;
 }
