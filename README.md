@@ -111,8 +111,8 @@ The application will open automatically in your browser at `http://localhost:850
 ---
 
 ## Screenshots
+<img width="959" height="394" alt="Dashboard" src="https://github.com/user-attachments/assets/f00acb77-4be1-447c-8e92-6139a1490d1a" />
 
-*(Add a screenshot of your Streamlit dashboard here)*
 
 ---
 ---
