@@ -129,7 +129,7 @@ This project was built by a dedicated team of developers:
 * **[Hoor ul ein Soomro](https://github.com/hurrainjhl)** - *Lead Developer*
 * **[Affaf Ahmad](https://github.com/Affafahmad)** - *Developer*
 * **[Sumaiya Arshad](https://github.com/pickachu19)** - *Developer*
-* **[Team Member 3]** - *Developer*
+* **Marryum Afzal** - *https://github.com/marryum2004*
 * **[Team Member 4]** - *Developer*
 
 ---
